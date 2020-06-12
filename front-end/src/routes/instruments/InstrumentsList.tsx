@@ -13,8 +13,15 @@ export default class InstrumentsList extends React.Component {
   @action private setInstruments = (instruments: InstrumentApi[]) => (this.instruments = instruments);
   @action private setSearch = (e: React.ChangeEvent<HTMLInputElement>) => (this.searchText = e.target.value);
 
+  /**
+   * Filter the list of instruments,
+   * if any of the values in the object match the search text ignoring case
+   * it will be matched by the filter/search
+   */
   @computed private get filteredInstruments() {
-    return this.instruments.filter(i => i.symbol.includes(this.searchText));
+    return this.instruments.filter(i =>
+      Object.values(i).some(v => String(v).toLowerCase().includes(this.searchText.toLowerCase())),
+    );
   }
 
   componentDidMount() {
