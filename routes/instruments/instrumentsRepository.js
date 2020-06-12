@@ -13,4 +13,8 @@ module.exports = {
   getAllInstruments() {
     return asyncQuery({ sql: 'SELECT * FROM instruments' });
   },
+  /** @param {number} id */
+  deleteInstrument(id) {
+    return asyncQuery({ sql: 'DELETE FROM instruments WHERE instrumentId = ?', values: [id] });
+  },
 };
