@@ -4,6 +4,7 @@
     "target": "es6",
     "jsx": "react",
     "module": "esnext",
+    "experimentalDecorators": true,
     "moduleResolution": "node",
     "strict": true,
     "noImplicitAny": false, // can be removed after adding module type definitions

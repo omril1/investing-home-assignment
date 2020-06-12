@@ -1,24 +1,24 @@
 import * as React from 'react';
 import * as style from './style.scss';
-import instrumentsAPI, { Instrument as InstrumentApi } from './instrumentsAPI';
 import Instrument from './Instrument';
+import instrumentsAPI, { Instrument as InstrumentApi } from './instrumentsAPI';
+import { action, observable } from 'mobx';
+import { observer } from 'mobx-react';
 
-interface State {
-  instruments: InstrumentApi[];
-}
-
+@observer
 export default class InstrumentsList extends React.Component {
-  state: State = { instruments: [] };
+  @observable private instruments: InstrumentApi[] = [];
+  @action private setInstruments = (instruments: InstrumentApi[]) => (this.instruments = instruments);
 
   componentDidMount() {
-    instrumentsAPI.getAllInstruments().then(instruments => this.setState({ instruments }));
+    instrumentsAPI.getAllInstruments().then(this.setInstruments);
   }
 
   render() {
     return (
       <div>
         <ul className={style.InstrumentsList}>
-          {this.state.instruments.map(instrument => (
+          {this.instruments.map(instrument => (
             <Instrument key={instrument.instrumentId} instrument={instrument} />
           ))}
         </ul>
