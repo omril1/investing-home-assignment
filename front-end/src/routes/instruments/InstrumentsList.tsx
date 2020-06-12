@@ -14,7 +14,7 @@ export default class InstrumentsList extends React.Component {
   @action private setSearch = (e: React.ChangeEvent<HTMLInputElement>) => (this.searchText = e.target.value);
 
   @computed private get filteredInstruments() {
-    return this.instruments;
+    return this.instruments.filter(i => i.symbol.includes(this.searchText));
   }
 
   componentDidMount() {
