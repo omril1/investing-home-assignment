@@ -4,7 +4,7 @@ const app = express();
 const seedDbIfNeeded = require('./seedDbIfNeeded');
 
 seedDbIfNeeded().then(() => {
-  app.use(express.static('public'));
+  app.use(express.static('./front-end/dist'));
 
   app.use('/instruments', require('./routes/instruments'));
 

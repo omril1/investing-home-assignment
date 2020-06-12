@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "es6",
+    "jsx": "react",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "noImplicitAny": false, // can be removed after adding module type definitions
+  },
+  "include": ["front-end"],
+  "exclude": ["node_modules"]
+}
