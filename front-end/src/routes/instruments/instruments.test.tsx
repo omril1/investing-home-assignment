@@ -58,15 +58,26 @@ describe('InstrumentsList component', () => {
       expect(instruments.length).toBe(16);
     });
 
-    it('should filter the results to a single item', async () => {
-      const wrapper = mount(<InstrumentsList />);
+    describe('filtering behavior', () => {
+      it('should filter the results to a single item', async () => {
+        const wrapper = mount(<InstrumentsList />);
+        wrapper.find('#search').simulate('change', { target: { value: 'USD/EUR' } });
+        await Promise.resolve();
+        wrapper.update();
 
-      wrapper.find('#search').simulate('change', { target: { value: 'USD/EUR' } });
-      await Promise.resolve();
-      wrapper.update();
+        const instruments = wrapper.find('Instrument');
+        expect(instruments.length).toBe(1);
+      });
 
-      const instruments = wrapper.find('Instrument');
-      expect(instruments.length).toBe(1);
+      it('should filter on multiple fields ignoring case', async () => {
+        const wrapper = mount(<InstrumentsList />);
+        wrapper.find('#search').simulate('change', { target: { value: 'US' } });
+        await Promise.resolve();
+        wrapper.update();
+
+        const instruments = wrapper.find('Instrument');
+        expect(instruments.length).toBe(4);
+      });
     });
   });
 });
