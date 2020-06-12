@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "webpack": "webpack --config ./front-end/webpack.config.js --watch"
+    "webpack": "webpack --config ./front-end/webpack.config.js --watch",
+    "test": "jest --config ./jest.config.js"
   },
   "license": "MIT",
   "dependencies": {
@@ -18,14 +19,21 @@
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.10.5",
+    "@types/jest": "^26.0.0",
     "@types/react": "^16.9.36",
     "@types/react-dom": "^16.9.8",
     "css-loader": "^3.5.3",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "html-webpack-plugin": "^4.3.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.0.1",
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.14.1",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.2.1",
+    "ts-jest": "^26.1.0",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5",
     "webpack": "^4.43.0",
