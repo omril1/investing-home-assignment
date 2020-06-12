@@ -1,14 +1,25 @@
+const bodyParser = require('body-parser');
 const express = require('express');
+const instrumentsRepository = require('./instrumentsRepository');
 const router = express.Router();
-const mockData = require('./mockData');
+
+router.use(bodyParser.json());
 
 router.get('/', (req, res) => {
-  res.send(mockData);
+  instrumentsRepository.getAllInstruments().then(result => res.send(result));
 });
 
 router.post('/', (req, res) => {
-  console.log(`Creating an instrument`);
-  res.sendStatus(201);
+  const { body } = req;
+  instrumentsRepository.addInstrument(body).then(
+    () => {
+      res.sendStatus(201);
+    },
+    err => {
+      console.error(err);
+      res.sendStatus(500);
+    },
+  );
 });
 
 router.delete('/:id', (req, res) => {
