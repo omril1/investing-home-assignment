@@ -26,6 +26,10 @@ const mockData = [
 // cSpell:enable
 
 const getAllInstrumentsSpy = jest.spyOn(instrumentsApi, 'getAllInstruments').mockResolvedValue(mockData);
+const deleteInstrumentSpy = jest
+  .spyOn(instrumentsApi, 'deleteInstrument')
+  // @ts-ignore
+  .mockResolvedValue("doesn't matter");
 
 beforeEach(() => getAllInstrumentsSpy.mockClear());
 
@@ -90,6 +94,34 @@ describe('InstrumentsList component', () => {
       const instruments = wrapper.find('Instrument');
       expect(instruments.length).toBe(16);
       instruments.forEach(instrument => expect(instrument.find('[data-test="delete-btn"]')).toHaveLength(1));
+    });
+
+    it('should delete the instrument with id 175 when clicking on the delete button', async () => {
+      const wrapper = mount(<InstrumentsList />);
+      await Promise.resolve();
+      wrapper.update();
+      const instrumentToDelete = wrapper.find('[data-test="instrument-175"]');
+
+      instrumentToDelete.find('[data-test="delete-btn"]').simulate('click');
+
+      expect(deleteInstrumentSpy).toHaveBeenCalledTimes(1);
+      expect(deleteInstrumentSpy).toHaveBeenCalledWith(175);
+    });
+
+    it(`should update the list of instruments after deleting the instrument with id 175 \
+with the new value from the API`, async () => {
+      const wrapper = mount(<InstrumentsList />);
+      await Promise.resolve();
+      wrapper.update();
+      const instrumentToDelete = wrapper.find('[data-test="instrument-175"]');
+
+      getAllInstrumentsSpy.mockResolvedValue(mockData.slice(0, 2));
+      instrumentToDelete.find('[data-test="delete-btn"]').simulate('click');
+      await Promise.resolve();
+      wrapper.update();
+
+      const instruments = wrapper.find('Instrument');
+      expect(instruments.length).toBe(2);
     });
   });
 });
