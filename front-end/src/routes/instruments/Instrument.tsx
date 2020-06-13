@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as style from './style.scss';
-import { Instrument as InstrumentApi } from './instrumentsAPI';
+import { InstrumentType } from './instrumentsAPI';
 
 interface Props {
-  instrument: InstrumentApi;
+  instrument: InstrumentType;
   onDelete: (id: number) => void;
 }
 

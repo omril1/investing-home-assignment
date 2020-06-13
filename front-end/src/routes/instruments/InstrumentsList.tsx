@@ -3,17 +3,17 @@ import * as style from './style.scss';
 import AddInstrumentDialog from './AddInstrumentDialog';
 import AddInstrumentDialogModel from './AddInstrumentDialogModel';
 import Instrument from './Instrument';
-import instrumentsAPI, { Instrument as InstrumentApi } from './instrumentsAPI';
+import instrumentsAPI, { InstrumentType } from './instrumentsAPI';
 import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
 @observer
 export default class InstrumentsList extends React.Component {
   @observable.ref private addInstrumentDialog?: AddInstrumentDialogModel;
-  @observable.ref private instruments: InstrumentApi[] = [];
+  @observable.ref private instruments: InstrumentType[] = [];
   @observable private searchText = '';
 
-  @action private setInstruments = (instruments: InstrumentApi[]) => (this.instruments = instruments);
+  @action private setInstruments = (instruments: InstrumentType[]) => (this.instruments = instruments);
   @action private setSearch = (e: React.ChangeEvent<HTMLInputElement>) => (this.searchText = e.target.value);
 
   /**
