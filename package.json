@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "webpack": "webpack --config ./front-end/webpack.config.js --watch",
+    "webpack:prod": "webpack --config ./front-end/webpack.config.js --mode production",
+    "webpack:dev": "webpack --config ./front-end/webpack.config.js --mode development --watch",
     "test": "jest --config ./jest.config.js"
   },
   "license": "MIT",

@@ -6,8 +6,6 @@ const isProduction = process.argv.indexOf('production') >= 0;
 const sourcePath = path.join(__dirname, './src');
 const outPath = path.join(__dirname, './dist');
 
-console.log('Running webpack in ' + (isProduction ? 'PRODUCTION' : 'DEVELOPMENT') + ' mode\n');
-
 // plugins
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
