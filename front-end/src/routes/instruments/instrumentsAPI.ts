@@ -8,7 +8,7 @@ export interface Instrument {
 const BASE_URL = '/instruments';
 
 const instrumentsAPI = {
-  addInstrument: (instrument: Instrument) =>
+  addInstrument: (instrument: Omit<Instrument, 'instrumentId'>) =>
     fetch(BASE_URL, {
       body: JSON.stringify(instrument),
       method: 'POST',

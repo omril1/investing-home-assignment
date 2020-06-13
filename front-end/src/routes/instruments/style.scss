@@ -19,7 +19,8 @@
   transition: transform 1s 0s ease;
 
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.1) translateY(10px);
+    z-index: 10;
   }
 }
 

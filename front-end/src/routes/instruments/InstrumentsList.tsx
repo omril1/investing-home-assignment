@@ -1,12 +1,15 @@
 import * as React from 'react';
 import * as style from './style.scss';
+import AddInstrumentDialog from './AddInstrumentDialog';
+import AddInstrumentDialogModel from './AddInstrumentDialogModel';
 import Instrument from './Instrument';
 import instrumentsAPI, { Instrument as InstrumentApi } from './instrumentsAPI';
-import { action, observable, computed } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
 @observer
 export default class InstrumentsList extends React.Component {
+  @observable.ref private addInstrumentDialog?: AddInstrumentDialogModel;
   @observable.ref private instruments: InstrumentApi[] = [];
   @observable private searchText = '';
 
@@ -28,6 +31,17 @@ export default class InstrumentsList extends React.Component {
   private updateInstruments = () => instrumentsAPI.getAllInstruments().then(this.setInstruments);
   private deleteInstrument = (id: number) => instrumentsAPI.deleteInstrument(id).then(this.updateInstruments);
 
+  @action private addInstrument = () => (this.addInstrumentDialog = new AddInstrumentDialogModel());
+  @action private cancelAddInstrument = () => (this.addInstrumentDialog = undefined);
+  private saveInstrument = async () => {
+    try {
+      instrumentsAPI.addInstrument(this.addInstrumentDialog!);
+      this.updateInstruments();
+    } finally {
+      this.cancelAddInstrument();
+    }
+  };
+
   componentDidMount() {
     this.updateInstruments();
   }
@@ -44,6 +58,16 @@ export default class InstrumentsList extends React.Component {
           value={this.searchText}
           onChange={this.setSearch}
         />
+
+        <button onClick={this.addInstrument}>Add Instrument</button>
+
+        {this.addInstrumentDialog && (
+          <AddInstrumentDialog
+            model={this.addInstrumentDialog}
+            onCancel={this.cancelAddInstrument}
+            onSave={this.saveInstrument}
+          />
+        )}
 
         <ul className={style.InstrumentsList}>
           {this.filteredInstruments.map(instrument => (
