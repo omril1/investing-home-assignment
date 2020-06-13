@@ -1,5 +1,25 @@
 .InstrumentsList {
   list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.instrument {
+  background: white;
+  display: inline-block;
+
+  padding: 0 6px;
+  border: 1px solid black;
+  border-radius: 13px;
+  margin: 5px;
+
+  box-shadow: 0 0 5px 1px #161d1d;
+  transition: transform 1s 0s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .searchBox {
