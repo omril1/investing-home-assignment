@@ -25,7 +25,10 @@ router.post('/', (req, res) => {
 router.delete('/:id', (req, res) => {
   const id = Number(req.params.id);
   console.log(`Deleting instrument with id: ${id}`);
-  return instrumentsRepository.deleteInstrument(id);
+  instrumentsRepository.deleteInstrument(id).then(
+    () => res.sendStatus(200),
+    () => res.status(500).send('Error deleting'), // can be better
+  );
 });
 
 module.exports = router;

@@ -7,7 +7,7 @@ import { observer } from 'mobx-react';
 
 @observer
 export default class InstrumentsList extends React.Component {
-  @observable private instruments: InstrumentApi[] = [];
+  @observable.ref private instruments: InstrumentApi[] = [];
   @observable private searchText = '';
 
   @action private setInstruments = (instruments: InstrumentApi[]) => (this.instruments = instruments);
@@ -24,8 +24,12 @@ export default class InstrumentsList extends React.Component {
     );
   }
 
+  // no error handling for now :|
+  private updateInstruments = () => instrumentsAPI.getAllInstruments().then(this.setInstruments);
+  private deleteInstrument = (id: number) => instrumentsAPI.deleteInstrument(id).then(this.updateInstruments);
+
   componentDidMount() {
-    instrumentsAPI.getAllInstruments().then(this.setInstruments);
+    this.updateInstruments();
   }
 
   render() {
@@ -43,7 +47,11 @@ export default class InstrumentsList extends React.Component {
 
         <ul className={style.InstrumentsList}>
           {this.filteredInstruments.map(instrument => (
-            <Instrument key={instrument.instrumentId} instrument={instrument} />
+            <Instrument
+              key={instrument.instrumentId}
+              instrument={instrument}
+              onDelete={this.deleteInstrument}
+            />
           ))}
         </ul>
       </div>

@@ -2,12 +2,18 @@ import * as React from 'react';
 import * as style from './style.scss';
 import { Instrument as InstrumentApi } from './instrumentsAPI';
 
-const Instrument: React.FC<{ instrument: InstrumentApi }> = props => {
+interface Props {
+  instrument: InstrumentApi;
+  onDelete: (id: number) => void;
+}
+
+const Instrument: React.FC<Props> = props => {
   const content = JSON.stringify(props.instrument, null, 2).split('"');
+  const onDeleteButtonClicked = () => props.onDelete(props.instrument.instrumentId);
 
   return (
     <li className={style.instrument} data-test={`instrument-${props.instrument.instrumentId}`}>
-      <button className={style.deleteButton} data-test="delete-btn">
+      <button className={style.deleteButton} data-test="delete-btn" onClick={onDeleteButtonClicked}>
         ❌
       </button>
       <pre>

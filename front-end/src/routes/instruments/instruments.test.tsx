@@ -117,9 +117,13 @@ with the new value from the API`, async () => {
 
       getAllInstrumentsSpy.mockResolvedValue(mockData.slice(0, 2));
       instrumentToDelete.find('[data-test="delete-btn"]').simulate('click');
+      // Need to be updated 2 times because 2 API promises need to resolve (delete and getAll)
+      await Promise.resolve();
+      wrapper.update();
       await Promise.resolve();
       wrapper.update();
 
+      expect(getAllInstrumentsSpy).toHaveBeenCalledTimes(2);
       const instruments = wrapper.find('Instrument');
       expect(instruments.length).toBe(2);
     });
