@@ -6,7 +6,7 @@
 }
 
 .instrument {
-  background: white;
+  position: relative;
   display: inline-block;
 
   padding: 0 6px;
@@ -14,12 +14,25 @@
   border-radius: 13px;
   margin: 5px;
 
+  background: white;
   box-shadow: 0 0 5px 1px #161d1d;
   transition: transform 1s 0s ease;
 
   &:hover {
     transform: scale(1.1);
   }
+}
+
+.deleteButton {
+  position: absolute;
+  top: 3px;
+  right: 4px;
+
+  padding: 2px;
+  border-radius: 50%;
+
+  font-size: 0.5em;
+  cursor: pointer;
 }
 
 .searchBox {

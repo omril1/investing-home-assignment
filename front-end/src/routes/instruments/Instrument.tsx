@@ -6,7 +6,10 @@ const Instrument: React.FC<{ instrument: InstrumentApi }> = props => {
   const content = JSON.stringify(props.instrument, null, 2).split('"');
 
   return (
-    <li className={style.instrument}>
+    <li className={style.instrument} data-test={`instrument-${props.instrument.instrumentId}`}>
+      <button className={style.deleteButton} data-test="delete-btn">
+        ❌
+      </button>
       <pre>
         {content.map((c, i) => (
           <span key={i} style={{ color: `hsl(${Math.random() * 360}, 60%, 40%)` }}>
