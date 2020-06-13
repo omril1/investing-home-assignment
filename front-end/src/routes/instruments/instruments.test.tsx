@@ -80,4 +80,16 @@ describe('InstrumentsList component', () => {
       });
     });
   });
+
+  describe('deleting an instrument', () => {
+    it('should have a delete button on each instrument component', async () => {
+      const wrapper = mount(<InstrumentsList />);
+      await Promise.resolve();
+      wrapper.update();
+
+      const instruments = wrapper.find('Instrument');
+      expect(instruments.length).toBe(16);
+      instruments.forEach(instrument => expect(instrument.find('[data-test="delete-btn"]')).toHaveLength(1));
+    });
+  });
 });
